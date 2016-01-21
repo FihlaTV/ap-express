@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="platform-browseTag">
+<head>
+	<meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>All tags</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/minislate.css">
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<nav-bar></nav-bar>
+  <div class="container" ng-controller="BrowseTagCtrl as bt">
+    <div class="page-header">
+      <h3>Tags <small><input type="text" id="fliterTag" ng-model="search" class="form-control" placeholder="search by title" /></small></h3>
+    </div>
+    <ul class="browseTag-list">
+      <li class="col-lg-3" ng-repeat="tag in tags | fuzzyBy: 'name': search">
+        <a href="{{tag.link}}"><span class="label label-success">{{tag.name}}</span></a>
+        <hr/>
+        <p>{{tag.abstract}}</p>
+      </li>
+    </ul>
+  </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.8/angular-filter.js"></script>
+    <script src="js/browseTag.js"></script>
+</body>
+</html>
