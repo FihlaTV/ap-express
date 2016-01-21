@@ -67,7 +67,7 @@ router.post('/register', function(req, res, next) {
 			})
 
 		} else {
-			req.session.cookie.userId = theUser._id;
+			req.session.userId = theUser._id;
 			res.cookie('userId', theUser._id, {
 				maxAge: 3 * 60 * 60 * 1000
 			});
@@ -81,8 +81,6 @@ router.post('/register', function(req, res, next) {
 					errorEmail: false
 				}
 			})
-
-			// });
 
 		}
 	});
@@ -105,9 +103,7 @@ router.post('/login', function(req, res, next) {
 			res.send("There was a problem adding the information to the database.");
 		} else {
 			if (theUser.password == password) {
-				// req.session.regenerate(function() {
-				// req.session.userId = theUser._id;
-				req.session.cookie.userId = theUser._id;
+				req.session.userId = theUser._id;
 				res.cookie('userId', theUser._id, {
 					maxAge: 3 * 60 * 60 * 1000
 				});
@@ -148,6 +144,7 @@ router.get('/initUser', function(req, res, next) {
 	var userId = req.cookies.userId;
 	var db = req.db,
 		collection = db.get('usercollection');
+
 	if (userId) {
 		collection.findOne({
 			"_id": userId
@@ -155,7 +152,6 @@ router.get('/initUser', function(req, res, next) {
 			if (err) {
 				return res.send("not login");
 			} else {
-				console.log(theUser);
 				return res.send({
 					success: true,
 					username: theUser.username,
