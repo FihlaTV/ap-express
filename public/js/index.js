@@ -10,12 +10,6 @@
 		}
 	};
 
-	// $http.get('/user.json').success(function(data) {
-	// 	// pointer changes, can't use this anymore. thus use store to refer to the previous pointer
-	// 	store.user = data;
-	// 	// rest things to do
-	// })
-
 	angular.module('platform-index', [])
 
 	.directive('navBar', [function() {
@@ -34,7 +28,10 @@
 		};
 	}])
 
-	.controller('FuncCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+	.controller('FuncCtrl', ['$http','$scope', '$rootScope', function($http, $scope, $rootScope) {
+		$http.get('/initUser').success(function(data) {
+			userInfo = data;
+		})
 		$rootScope.info = userInfo;
 	}])
 
@@ -111,22 +108,9 @@
 
 	.controller('LogoutCtrl', ['$http', '$scope', function($http, $scope) {
 		$scope.logOut = function() {
-			$http({
-					method: 'POST',
-					url: '／logout', // to be changed
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded'
-					} // set the headers so angular passing info as form data (not request payload)
-				})
-				.success(function(data) {
-
-					if (!data.success) {
-						// if not successful, bind errors to error variables
-					} else {
-						// if success, update user data and apply
-					}
-
-				});
+			$http.get('/logout').success(function(data) {
+				//todo
+			})
 		}
 	}])
 

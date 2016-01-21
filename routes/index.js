@@ -46,15 +46,14 @@ router.post('/register', function(req, res, next) {
 		"password": password,
 		"email": user.email,
 		"role": user.role
-	}, function(err, doc) {
+	}, function(err, theUser) {
 		if (err) {
 			// If it failed, return error
-			console.log(err)
-			var errorName, errorEmail=false;
-			if (err.code = 11000 && err.err.indexOf('username')>-1) {
+			var errorName, errorEmail = false;
+			if (err.code = 11000 && err.err.indexOf('username') > -1) {
 				errorName = true;
 			};
-			if (err.code = 11000 && err.err.indexOf('email')>-1) {
+			if (err.code = 11000 && err.err.indexOf('email') > -1) {
 				errorEmail = true;
 			};
 			return res.send({
@@ -66,16 +65,25 @@ router.post('/register', function(req, res, next) {
 					errorEmail: errorEmail
 				}
 			})
+
 		} else {
-			return res.send({
-				success: true,
-				loginAs: user.role,
-				username: user.username,
-				errors: {
-					errorName: false,
-					errorEmail: false
-				}
-			})
+			// req.session.regenerate(function() {
+				req.user = theUser;
+				req.session.userId = theUser._id;
+				req.session.save();
+
+				return res.send({
+					success: true,
+					loginAs: user.role,
+					username: user.username,
+					errors: {
+						errorName: false,
+						errorEmail: false
+					}
+				})
+
+			// });
+
 		}
 	});
 
@@ -97,14 +105,23 @@ router.post('/login', function(req, res, next) {
 			res.send("There was a problem adding the information to the database.");
 		} else {
 			if (theUser.password == password) {
-				return res.send({
-					success: true,
-					username: theUser.username,
-					loginAs: theUser.role,
-					errors: {
-						errorAuthen: false,
-					}
-				})
+				// req.session.regenerate(function() {
+					req.user = theUser;
+					req.session.userId = theUser._id;
+					console.log(req.session.userId);
+					req.session.save();
+
+					return res.send({
+						success: true,
+						username: theUser.username,
+						loginAs: theUser.role,
+						errors: {
+							errorAuthen: false,
+						}
+					})
+
+				// });
+
 			} else {
 				return res.send({
 					success: false,
@@ -112,10 +129,40 @@ router.post('/login', function(req, res, next) {
 						errorAuthen: true
 					}
 				})
+
 			}
 		}
 	});
 
+});
+
+router.get('/logout', function(req, res, next) {
+	req.clearCookie('connect.sid');
+	req.user = null;
+
+	req.session.regenerate(function() {
+		res.redirect('/');
+	})
+});
+
+router.get('/initUser', function(req, res, next) {
+	var userId = req.session.userId;
+	console.log(userId);
+	collection.findOne({
+		"_id": userId
+	}, function(err, theUser) {
+		if (err) {
+			//error
+		} else {
+
+			return res.send({
+				success: true,
+				username: theUser.username,
+				loginAs: theUser.role,
+			})
+
+		}
+	});
 });
 
 module.exports = router;
