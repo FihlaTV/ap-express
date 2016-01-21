@@ -29,10 +29,10 @@
 	}])
 
 	.controller('FuncCtrl', ['$http','$scope', '$rootScope', function($http, $scope, $rootScope) {
-		$http.get('/initUser').success(function(data) {
-			userInfo = data;
-		})
 		$rootScope.info = userInfo;
+		$http.get('/initUser').success(function(data) {
+			$rootScope.info = data;
+		})
 	}])
 
 	.controller('SignupCtrl', ['$http', '$scope', '$rootScope', function($http, $scope, $rootScope) {
@@ -90,7 +90,7 @@
 					} // set the headers so angular passing info as form data (not request payload)
 				})
 				.success(function(data) {
-					console.log(data)
+					// console.log(data)
 					if (!data.success) {
 						// if not successful, bind errors to error variables
 						$scope.errorAuthen = data.errors.errorAuthen; //true not match
@@ -106,10 +106,10 @@
 
 	}])
 
-	.controller('LogoutCtrl', ['$http', '$scope', function($http, $scope) {
+	.controller('LogoutCtrl', ['$http', '$scope','$rootScope', function($http, $scope,$rootScope) {
 		$scope.logOut = function() {
 			$http.get('/logout').success(function(data) {
-				//todo
+				$rootScope.info = data;
 			})
 		}
 	}])
