@@ -104,6 +104,7 @@ router.post('/login', function(req, res, next) {
 		} else {
 			if (theUser.password == password) {
 				req.session.userId = theUser._id;
+				console.log(req.sessionID);
 				res.cookie('userId', theUser._id, {
 					maxAge: 3 * 60 * 60 * 1000
 				});
@@ -116,8 +117,6 @@ router.post('/login', function(req, res, next) {
 						errorAuthen: false,
 					}
 				})
-
-				// });
 
 			} else {
 				return res.send({
@@ -169,7 +168,7 @@ router.get('/initUser', function(req, res, next) {
 
 //get tag
 router.get('/getTag/:tagname', function(req, res, next) {
-	var tagname = req.params.tagname,
+	var tagname = req.params.tagname.toLowerCase(),
 		db = req.db,
 		usercollection = db.get('usercollection'),
 		tagcollection = db.get('tagcollection'),
@@ -214,6 +213,48 @@ router.get('/getTag/:tagname', function(req, res, next) {
 			}
 		}
 	});
+});
+
+//save tag
+router.post('/saveTag', function(req, res, next) {
+	var db = req.db,
+		collection = db.get('tagcollection'),
+		tag = req.body;
+
+	collection.findOne({
+		"tag": tag.tag.toLowerCase()
+	}, function(err, theUser) {
+		if (err) {
+			// If it failed, return error
+			res.send("There was a problem adding the information to the database.");
+		} else {
+			if (theUser) {
+				collection.update({
+					"tag": tag.tag.toLowerCase()
+				}, {
+					"abstract": tag.abstract,
+					"intro": tag.intro
+				})
+
+				return res.send({
+					success: true
+				})
+
+			} else {
+				// new tag
+				collection.insert({
+					"tag": tag.tag.toLowerCase(),
+					"abstract": tag.abstract,
+					"intro": tag.intro
+				})
+				return res.send({
+					success: true
+				})
+
+			}
+		}
+	});
+
 });
 
 module.exports = router;

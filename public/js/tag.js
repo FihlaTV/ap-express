@@ -63,26 +63,26 @@
 
 			// to be removed
 
-			var d = new Date();
-			$scope.saveText = "saved at " + d.getHours() + ":"+(d.getMinutes()<10?'0':"")+ d.getMinutes();
+			// var d = new Date();
+			// $scope.saveText = "saved at " + d.getHours() + ":"+(d.getMinutes()<10?'0':"")+ d.getMinutes();
 
 			// replaced with
-			// $http({
-			// 		method: 'POST',
-			// 		url: 'saveTagProcess', 
-			// 		data: $.param(tagInfo), 
-			// 		headers: {
-			// 			'Content-Type': 'application/x-www-form-urlencoded'
-			// 		} 
-			// 	})
-			// 	.success(function(data) {
-			// 		if (!data.success) {
-			// 			$scope.saveText = "not saved";
-			// 		} else {
-			//			var d = new Date();
-			// 			$scope.saveText = "saved at " + d.getHours() + ":" + (d.getMinutes()<10?'0':"")+ d.getMinutes();
-			// 		}
-			// 	});
+			$http({
+					method: 'POST',
+					url: '/saveTag', 
+					data: $.param(tagInfo), 
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					} 
+				})
+				.success(function(data) {
+					if (!data.success) {
+						$scope.saveText = "not saved";
+					} else {
+						var d = new Date();
+						$scope.saveText = "saved at " + d.getHours() + ":" + (d.getMinutes()<10?'0':"")+ d.getMinutes();
+					}
+				});
 
 		}
 

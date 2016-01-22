@@ -22,8 +22,9 @@ input,button,textarea,label{
 }
 body{
 	position: relative;
+	background: #f5f5f5;
 }
-body::after {
+/*body::after {
   content: "";
   background: url(../img/bg_bright.png);
   background-repeat: repeat-y;
@@ -34,7 +35,8 @@ body::after {
   right: 0;
   position: absolute;
   z-index: -1;   
-}
+  min-height: 650px;
+}*/
 .form-control:focus,
 .btn:focus,
 .btn:active{

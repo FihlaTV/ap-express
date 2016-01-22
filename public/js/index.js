@@ -28,7 +28,7 @@
 		};
 	}])
 
-	.controller('FuncCtrl', ['$http','$scope', '$rootScope', function($http, $scope, $rootScope) {
+	.controller('FuncCtrl', ['$http', '$scope', '$rootScope', function($http, $scope, $rootScope) {
 		$rootScope.info = userInfo;
 		$http.get('/initUser').success(function(data) {
 			$rootScope.info = data;
@@ -50,11 +50,14 @@
 			};
 			$http({
 					method: 'POST',
-					url: '/register', // to be changed
-					data: $.param($scope.formData), // pass in data as strings
+					url: '/register',
+					data: $.param($scope.formData),
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded'
-					} // set the headers so angular passing info as form data (not request payload)
+					},
+					xhrFields: {
+						withCredentials: true
+					}
 				})
 				.success(function(data) {
 
@@ -83,11 +86,14 @@
 			};
 			$http({
 					method: 'POST',
-					url: '/login', // to be changed
-					data: $.param($scope.formData), // pass in data as strings
+					url: '/login',
+					data: $.param($scope.formData), 
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded'
-					} // set the headers so angular passing info as form data (not request payload)
+					},
+					xhrFields: {
+						withCredentials: true
+					}
 				})
 				.success(function(data) {
 					// console.log(data)
@@ -106,7 +112,7 @@
 
 	}])
 
-	.controller('LogoutCtrl', ['$http', '$scope','$rootScope', function($http, $scope,$rootScope) {
+	.controller('LogoutCtrl', ['$http', '$scope', '$rootScope', function($http, $scope, $rootScope) {
 		$scope.logOut = function() {
 			$http.get('/logout').success(function(data) {
 				$rootScope.info = data;

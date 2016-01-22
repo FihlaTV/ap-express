@@ -40,7 +40,10 @@ app.use(session({
   resave: false,
   cookie: {
     secure: true,
-    maxAge: 6000000
+    maxAge: 6000000,
+    path     : '/',  
+    domain   : 'localhost',  
+    httpOnly : true
   }
 }));
 
