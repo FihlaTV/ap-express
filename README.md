@@ -1,13 +1,12 @@
 # ap-express
 a node.js application for algorithm platform. (https://github.com/stevetompson0/DeltaWeb)
 
-## Require
-mongodb 
-node.js
+### Require
+node.js & mongodb
 
-## installation
+### installation
 - Download ZIP
-- npm install
+- `npm install`
 
-use npm start to run.
+use `npm start` to run.
 
