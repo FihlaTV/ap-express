@@ -221,6 +221,7 @@
 })()
 
 jQuery(document).ready(function($) {
+	$('[data-toggle="tooltip"]').tooltip();
 	$(".label").popover({
 			trigger: "manual",
 			html: true,

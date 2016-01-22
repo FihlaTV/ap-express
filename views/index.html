@@ -28,17 +28,17 @@
       <ul ng-show="$root.info.loginAs==0">
         <li><a href="#" data-toggle="modal" data-target="#signupModal"><i class="fa fa-sign-in"></i> Sign up ></a></li>
         <li><a href="#" data-toggle="modal" data-target="#loginModal"><i class="fa fa-user"></i> Log in ></a></li>
-        <li><a href="list.html"><i class="fa fa-th-list"></i> List of Questions ></a></li>
+        <li><a href="list"><i class="fa fa-th-list"></i> List of Questions ></a></li>
       </ul>
       <ul ng-show="$root.info.loginAs==1">
         <li><a href="#" title="click to log out"  data-toggle="modal" data-target="#logoutModal"><i class="fa fa-user"></i>{{$root.info.username}} ></a></li> 
-        <li><a href="library.html"><i class="fa fa-heart"></i> My Library ></a></li>
-        <li><a href="list.html"><i class="fa fa-th-list"></i> List of Questions ></a></li>
+        <li><a href="library"><i class="fa fa-heart"></i> My Library ></a></li>
+        <li><a href="list"><i class="fa fa-th-list"></i> List of Questions ></a></li>
       </ul>
       <ul ng-show="$root.info.loginAs==2">
         <li><a href="#" title="click to log out"  data-toggle="modal" data-target="#logoutModal"><i class="fa fa-user"></i>{{$root.info.username}} ></a></li>
         <li><a href="MyQuestions.html"><i class="fa fa-save"></i> My Questions ></a></li>
-        <li><a href="record.html"><i class="fa fa-pencil"></i> Record a Question ></a></li>
+        <li><a href="record"><i class="fa fa-pencil"></i> Record a Question ></a></li>
       </ul>
     </div>
     <footer>

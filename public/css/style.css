@@ -20,9 +20,13 @@ input,button,textarea,label{
 #index-body{
 	min-width: 1100px;
 }
+body{
+	position: relative;
+}
 body::after {
   content: "";
   background: url(../img/bg_bright.png);
+  background-repeat: repeat-y;
   opacity: 0.3;
   top: 0;
   left: 0;
@@ -38,6 +42,9 @@ body::after {
     outline: 0;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(175,202,9,.6);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(175,202,9,.6);
+}
+.form-control{
+	background: rgba(255,255,255,.6);
 }
 .modal-dialog{
 	margin-top: 70px !important;
@@ -258,6 +265,20 @@ box-shadow: 5px 5px 5px 1px rgba(175,202,9,0.48);
 #optionModal input{
 	margin-bottom: 5px;
 }
+#add-formula,
+#add-formula2{
+	cursor: pointer;
+}
+.formula-container li:last-child{
+	padding-top: 3px;
+}
+#add-formula i,
+#add-formula2 i{
+	font-size: 18px;
+	padding-right: 5px;
+	position: relative;
+	top: 2px;
+}
 .variable-range{
 	padding-top: 5px;
 }
@@ -274,28 +295,31 @@ box-shadow: 5px 5px 5px 1px rgba(175,202,9,0.48);
 #record-body .container-fluid{
 	padding-bottom: 20px;
 }
-#formula-container{
+.formula-container{
 	height: auto;
 	padding: 10px 15px;
 }
-#formula-container li{
+.formula-container li{
 	list-style: none;
 	position: relative;
 	padding-bottom: 5px;
 }
-#formula-container li span{
+.formula-container li span{
 	color: #bbb;
 	position: absolute;
 	top: 2px;
 	left: -7px;
 }
-#formula-container li input{
-	width: 98%;
-	margin-left: 10px;
+.formula-container li input{
+	width: 95%;
+	margin-left: 25px;
 	border: none;
 	border-bottom: 1px solid #bbb;
 	margin-right: 15px;
 	padding: 2px 5px;
+}
+#formula-container2{
+	margin-top: 20px;
 }
 /*page: list*/
 #question-list h3{
@@ -389,6 +413,9 @@ box-shadow: 5px 5px 5px 1px rgba(175,202,9,0.48);
 }
 #question-container h3 small{
 	padding-left: 10px;
+}
+#question-content div{
+	margin-top: 20px;
 }
 a.tag-link{
 	padding:0 5px;

@@ -8,10 +8,10 @@
   <title>Tag information</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/minislate.css">
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/font-awesome.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/minislate.css">
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -19,7 +19,7 @@
   <div class="container taginfo-container" ng-controller="TaginfoCtrl as info">
     <div class="page-header">
       <h3>Tag info: 
-        <span class="label label-default"><span contenteditable="{{startEdit}}" id="tag-name">{{data.tag}}</span></span> <small ng-show="data.canEdit">
+        <span class="label label-default"><span contenteditable="{{startEdit}}" id="tag-name">{{data.tag}}</span></span> <small ng-if="data.canEdit">
         <a href="#" id="editing" ng-class="{active:isActive}" ng-click="enableEdit()"><i class="fa fa-edit"></i> {{editText}}</a>
         <a href="#" ng-class="{active:isSaved}" ng-click="save()"><i class="fa fa-save"></i> {{saveText}}</a></small></h3>
     </div>
@@ -36,9 +36,9 @@
     </div>
   </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="js/angular.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/minislate.js"></script>
-    <script src="js/tag.js"></script>
+    <script src="../js/angular.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/minislate.js"></script>
+    <script src="../js/tag.js"></script>
 </body>
 </html>

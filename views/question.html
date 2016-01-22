@@ -22,10 +22,11 @@
     <div id="question-content" class="monokai">
       <p>{{question.content}}</p>
       <code class="prettyprint linenums">{{question.code}}</code>     
-      <div class="btn-group" role="group">
+      <div class="btn-group" role="group" ng-if="question.hasLogin">
         <a type="button" class="btn btn-default" href="{{question.download_link}}" target="_blank"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> Download as PDF</a>
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#answer-modal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Show me answer</button>
       </div>
+      <div ng-if="!question.hasLogin">Please log in to download the question or check the answer: <a href="index.html" class="">>> Log in.</a></div>
       </div>
         <!-- modal -->
       <div class="modal fade" id="answer-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -43,6 +44,31 @@
       </div>
     </div>
   </div>
+	<!-- move to html files when fetching from the server -->
+        <script type="text/ng-template" id="nav.html">
+          <nav class="container">
+            <div id="nav-container">
+              <div id="logo" class="pull-left"><a href="index.html">
+                <strong>{</strong>Algorithm Platform<strong>}</strong>
+              </a></div>
+              <div class="pull-right">
+                    <ul class="top-social no-bottom-margin">
+                      <li><a href="#" title="share to Facebook" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-facebook"></i></a></li>
+                      <li><a href="#" title="Share by email" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-envelope-o "></i></a></li>
+                      <li><a href="#" title="Fork on Github" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-github"></i></a></li>
+                    </ul>
+                    <div class="top-search">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search ...">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+          </nav>
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

@@ -5,7 +5,7 @@
 	.directive('navBar', [function() {
 		return {
 			restrict: 'E',
-			templateUrl: "nav.html",
+			templateUrl: "../nav.html",
 			// controlerAs:"nav", 
 			controller: ['$scope', function($scope) {
 				//pass links throught json
@@ -18,13 +18,23 @@
 		};
 	}])
 
-	.controller('TaginfoCtrl', ['$scope', function($scope) {
+	.controller('TaginfoCtrl', ['$http','$scope', function($http, $scope) {
+
+		var paths = location.pathname.split('/');
+
 		$scope.data = {
-			canEdit: true,
-			tag: "JavaScript",
-			abstract: "JavaScript (not to be confused with Java) is a dynamic, weakly-typed language used for client-side as well as server-side scripting. Use this tag for questions regarding ECMAScript and its various dialects/implementations (excluding ActionScript and Google-Apps-Script). Unless another tag for a framework/library is also included, a pure JavaScript answer is expected.",
-			intro: "<p><b>JavaScript</b> is a dynamic, object-based, prototype-based, weakly typed language traditionally used for client-side scripting in web browsers. javascript can also be run outside of the browser with the use of a framework like . Despite the name, it is unrelated to the Java programming language and shares only superficial similarities.&nbsp;</p><blockquote><p>Unless a tag for a framework or library is also included, a pure JavaScript answer is expected for questions with the tag.</p></blockquote>",
+			canEdit: false,
+			tag: paths[ paths.length-1 ],
+			abstract: "add abstract",
+			intro: "add introduction"
 		};
+
+		$http.get('/getTag/'+paths[ paths.length-1 ]).success(function(data) {
+			if (data) {
+				console.log(data)
+				$scope.data = data;
+			};
+		})
 
 		$scope.startEdit = false;
 
@@ -86,6 +96,7 @@
 
 // not sure why those error messages on console, although it doesn't affect the way it works.
 jQuery(document).ready(function($) {
+	$('[data-toggle="tooltip"]').tooltip();
 	$('#editing').one('click', function(event) {
 		var editor = new Minislate.simpleEditor(document.getElementById('tag-intro'));
 	});

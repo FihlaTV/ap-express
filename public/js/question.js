@@ -27,6 +27,7 @@
 		// 	$scope.$apply();
 		// })
 		$scope.question = {
+			hasLogin: true,
 			title: "Nest Thermostat temperature not getting updated",
 			content: "I am trying to change the temperature of my Nest programmatically (Android), without any luck. Requests work maybe 1 in 30-50 tries. \n\
 					I have tried doing it through the Firebase Nest SDK, \n \
@@ -84,6 +85,7 @@
 
 jQuery(document).ready(function($) {
 
+	$('[data-toggle="tooltip"]').tooltip();
 	prettyPrint();
 
 });

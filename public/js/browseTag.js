@@ -21,10 +21,18 @@
 	.controller('BrowseTagCtrl', ['$scope', function($scope) {
 		// get initial questions
 		// $scope.tags=[];
+		// $scope.user={};
 		// $http.get('/browseTag.json').success(function(data) {
-		// 	$scope.questions=data.tags; 
+		// 	$scope.tags=data.tags; 
+		//  $scope.user=data.user; 
 		// 	$scope.$apply();
 		// })
+		$scope.user = {
+			success: true,
+			loginAs: 2, //0 as not login, 1 as student, 2 as instructor
+			username: "wei",
+		};
+
 		$scope.tags = [{
 			name: "JavaScript",
 			abstract: "JavaScript (not to be confused with Java) is a dynamic, weakly-typed language used for client-side as well as server-side...",
@@ -53,3 +61,7 @@
 	}])
 
 })()
+
+jQuery(document).ready(function($) {
+	$('[data-toggle="tooltip"]').tooltip();
+});

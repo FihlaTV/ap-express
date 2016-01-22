@@ -20,7 +20,7 @@
       <div class="filter-container">
         <h4>Filter by tags <small><a href="#" class="pull-right" ng-click="filter('')">clear</a></small></h4>
         <a ng-repeat="tag in tags" href="#" ng-click="filter(tag.name)">
-          <span class="label label-default" data-container="body" data-toggle="popover" data-placement="top" data-content="{{tag.abs}}. <a href='{{tag.link}}'>detail</a>" data-html="true" ng-class="{'label-success':activeFilter==tag.name}">{{tag.name}}</span>
+          <span class="label label-default" data-container="body" data-toggle="popover" data-placement="top" data-content="{{tag.abs}}. <a href='tag/{{tag.link}}'>detail</a>" data-html="true" ng-class="{'label-success':activeFilter==tag.name}">{{tag.name}}</span>
         </a>
       </div>
     </div>

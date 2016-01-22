@@ -133,13 +133,16 @@ router.post('/login', function(req, res, next) {
 
 });
 
+//logout
 router.get('/logout', function(req, res, next) {
+	console.log("[data]")
 	res.clearCookie('userId');
 	res.send({
 		loginAs: 0
 	});
 });
 
+// init info
 router.get('/initUser', function(req, res, next) {
 	var userId = req.cookies.userId;
 	var db = req.db,
@@ -162,6 +165,55 @@ router.get('/initUser', function(req, res, next) {
 		});
 	};
 
+});
+
+//get tag
+router.get('/getTag/:tagname', function(req, res, next) {
+	var tagname = req.params.tagname,
+		db = req.db,
+		usercollection = db.get('usercollection'),
+		tagcollection = db.get('tagcollection'),
+		userId = req.cookies.userId,
+		canEdit = false;
+
+	if (userId) {
+		usercollection.findOne({
+			"_id": userId
+		}, function(err, theUser) {
+			if (err) {
+				return res.send("not login");
+			} else {
+				if (theUser.role == "2") {
+					canEdit = true;
+				};
+
+			}
+		});
+	};
+
+	tagcollection.findOne({
+		"tag": tagname
+	}, function(err, theTag) {
+		if (err) {
+			return res.redirect('/browse');
+		} else {
+			if (theTag != null) {
+				return res.send({
+					canEdit: canEdit,
+					tag: theTag.tag,
+					abstract: theTag.abstract,
+					intro: theTag.intro
+				})
+			} else {
+				return res.send({
+					canEdit: false,
+					tag: tagname,
+					abstract: "add abstract",
+					intro: "add introduction"
+				});
+			}
+		}
+	});
 });
 
 module.exports = router;

@@ -28,6 +28,7 @@
                             <button type="button" id="record-title" ng-click="editTitle()" class="btn btn-default">Edit title</button>
                              <button type="button" id="record-tags" class="btn btn-default" data-toggle="modal" data-target="#tagModal">Edit tags</button>  
                              <button type="button" id="record-insert" ng-click="insertVariable(0)" class="btn btn-default">Insert variable</button>
+                              <button type="button" id="record-insert" ng-click="insertVariable(1)" class="btn btn-default">Insert hidden variable</button>
                              <button type="button" id="record-options" class="btn btn-default" data-toggle="modal" data-target="#optionModal">Add options</button>
                              <button type="button" id="record-codes" class="btn btn-default"  data-toggle="modal" data-target="#codeModal">Add code</button>
                             <button type="button" class="btn btn-default" ng-click="submit()">Submit</button>
@@ -76,19 +77,35 @@
                 <div class="container-fluid">
                 
                   <div class="col-lg-8">
-                    <ul id="formula-container" class="form-control" ng-show="variables.length>0">
-                      <li ng-repeat="variable in variables" id="formula-line{{variable.index}}"><span>a{{variable.index}}.</span><input type="text"></li>
+                    <ul class="formula-container form-control" id="formula-container1">
+                      <li ng-repeat="variable in variables" id="formula-line{{variable.index}}"><span>a{{variable.index}} = </span><input type="text"></li>
+                      <li><a id="add-formula" ng-click="addFormula()"><i class="fa fa-plus-square-o"></i>Add a new formula</a></li>
                     </ul>
                   </div>
 
                 </div>
                 <div class="page-header">
-                    <h3>3. Edit Answers <small>use the variables indicated above</small></h3>
+                    <h3>3. Edit Answers <small>use the variables indicated above and include in $; eg $a1+a2$</small></h3>
                 </div> 
                 <div class="container-fluid">
                 
                   <div class="col-lg-8">
-                    <textarea name="answer" class="form-control" id="" cols="30" rows="10"></textarea>
+                    <textarea id="answer-textarea" name="answer" class="form-control" id="" cols="30" rows="10"></textarea>
+                  </div>
+                <!--    <div class="col-lg-8">
+                    <ul class="formula-container form-control" id="formula-container2">
+                      <li><a id="add-formula2" ng-click="addFormula2()"><i class="fa fa-plus-square-o"></i>Add a new formula</a></li>
+                    </ul>
+                  </div> -->
+
+                </div>
+                 <div class="page-header">
+                    <h3>4. Original Problem <small>Default question without variables</small></h3>
+                </div> 
+                <div class="container-fluid">
+                
+                  <div class="col-lg-8">
+                    <textarea id="origin-textarea" name="answer" class="form-control" id="" cols="30" rows="10"></textarea>
                   </div>
 
                 </div>
@@ -147,6 +164,32 @@
                 </div>
             </form>
     </div>
+
+<!-- move to html files when fetching from the server -->
+     <script type="text/ng-template" id="nav.html">
+          <nav class="container">
+            <div id="nav-container">
+              <div id="logo" class="pull-left"><a href="index.html">
+                <strong>{</strong>Algorithm Platform<strong>}</strong>
+              </a></div>
+              <div class="pull-right">
+                    <ul class="top-social no-bottom-margin">
+                      <li><a href="#" title="share to Facebook" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-facebook"></i></a></li>
+                      <li><a href="#" title="Share by email" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-envelope-o "></i></a></li>
+                      <li><a href="#" title="Fork on Github" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-github"></i></a></li>
+                    </ul>
+                    <div class="top-search">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search ...">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                        </span>
+                      </div><!-- /input-group -->
+                    </div>
+                  </div>
+            </div>
+          </nav>
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
