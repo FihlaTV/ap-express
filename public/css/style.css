@@ -479,6 +479,9 @@ a.tag-link:last-child:after{
 .taginfo-container span span{
 	outline-color: #afca09;
 }
+#tag-intro{
+	margin-bottom: 50px;
+}
 /*code display*/
 /*textarea line*/
 code{

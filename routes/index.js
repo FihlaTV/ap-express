@@ -12,7 +12,24 @@ router.get('/list', function(req, res, next) {
 });
 
 router.get('/tag/:tagname', function(req, res, next) {
-	res.render('tag');
+	var tagname = req.params.tagname.toLowerCase(),
+		db = req.db,
+		tagcollection = db.get('tagcollection'),
+		canEdit = req.cookies.canEdit;
+
+	tagcollection.findOne({
+		"tag": tagname
+	}, function(err, theTag) {
+		if (err) {
+			res.redirect("/browse");
+		} else {
+			if (theTag != null) {
+				res.render('tag');
+			} else {
+				res.redirect("/browse");
+			}
+		}
+	});
 });
 
 router.get('/browse', function(req, res, next) {
@@ -67,8 +84,12 @@ router.post('/register', function(req, res, next) {
 			})
 
 		} else {
-			req.session.userId = theUser._id;
+			// req.session.userId = theUser._id;
 			res.cookie('userId', theUser._id, {
+				maxAge: 3 * 60 * 60 * 1000
+			});
+			var canEdit = user.role == "2" ? true : false;
+			res.cookie('canEdit', canEdit, {
 				maxAge: 3 * 60 * 60 * 1000
 			});
 
@@ -103,9 +124,13 @@ router.post('/login', function(req, res, next) {
 			res.send("There was a problem adding the information to the database.");
 		} else {
 			if (theUser.password == password) {
-				req.session.userId = theUser._id;
-				console.log(req.sessionID);
+				// req.session.userId = theUser._id;
+				// console.log(req.sessionID);
 				res.cookie('userId', theUser._id, {
+					maxAge: 3 * 60 * 60 * 1000
+				});
+				var canEdit = theUser.role == "2" ? true : false;
+				res.cookie('canEdit', canEdit, {
 					maxAge: 3 * 60 * 60 * 1000
 				});
 
@@ -170,24 +195,11 @@ router.get('/initUser', function(req, res, next) {
 router.get('/getTag/:tagname', function(req, res, next) {
 	var tagname = req.params.tagname.toLowerCase(),
 		db = req.db,
-		usercollection = db.get('usercollection'),
 		tagcollection = db.get('tagcollection'),
-		userId = req.cookies.userId,
-		canEdit = false;
+		canEdit = req.cookies.canEdit;
 
-	if (userId) {
-		usercollection.findOne({
-			"_id": userId
-		}, function(err, theUser) {
-			if (err) {
-				return res.send("not login");
-			} else {
-				if (theUser.role == "2") {
-					canEdit = true;
-				};
-
-			}
-		});
+	if (tagname=="new"&&canEdit==false) {
+		return res.redirect('/browse');
 	};
 
 	tagcollection.findOne({
@@ -198,18 +210,14 @@ router.get('/getTag/:tagname', function(req, res, next) {
 		} else {
 			if (theTag != null) {
 				return res.send({
+					isNew: tagname=="new",
 					canEdit: canEdit,
 					tag: theTag.tag,
 					abstract: theTag.abstract,
 					intro: theTag.intro
 				})
 			} else {
-				return res.send({
-					canEdit: false,
-					tag: tagname,
-					abstract: "add abstract",
-					intro: "add introduction"
-				});
+				res.redirect("/browse");
 			}
 		}
 	});
@@ -221,17 +229,23 @@ router.post('/saveTag', function(req, res, next) {
 		collection = db.get('tagcollection'),
 		tag = req.body;
 
+	console.log(tag);
+
+	// if (tagname=="new") {
+	// 	return res.send("can't modify new");
+	// };
+
 	collection.findOne({
 		"tag": tag.tag.toLowerCase()
-	}, function(err, theUser) {
+	}, function(err, theTag) {
 		if (err) {
-			// If it failed, return error
 			res.send("There was a problem adding the information to the database.");
 		} else {
-			if (theUser) {
+			if (theTag) {
 				collection.update({
 					"tag": tag.tag.toLowerCase()
 				}, {
+					"tag": tag.tag.toLowerCase(),
 					"abstract": tag.abstract,
 					"intro": tag.intro
 				})

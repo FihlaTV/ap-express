@@ -18,20 +18,21 @@
 		};
 	}])
 
-	.controller('TaginfoCtrl', ['$http','$scope', function($http, $scope) {
+	.controller('TaginfoCtrl', ['$http', '$scope', function($http, $scope) {
 
 		var paths = location.pathname.split('/');
 
 		$scope.data = {
+			isNew: false,
 			canEdit: false,
-			tag: paths[ paths.length-1 ],
+			tag: paths[paths.length - 1],
 			abstract: "add abstract",
 			intro: "add introduction"
 		};
 
-		$http.get('/getTag/'+paths[ paths.length-1 ]).success(function(data) {
+		$http.get('/getTag/' + paths[paths.length - 1]).success(function(data) {
 			if (data) {
-				console.log(data)
+				console.log(data);
 				$scope.data = data;
 			};
 		})
@@ -47,16 +48,24 @@
 		$scope.isSaved = false;
 
 		$scope.enableEdit = function() {
-			$scope.isActive = true;
-			$scope.startEdit = true;
-			$scope.editText = "editing";
+			if (!$scope.startEdit) {
+				$scope.isActive = true;
+				$scope.startEdit = true;
+				$scope.editText = "editing";
+				var editor = new Minislate.simpleEditor(document.getElementById('tag-intro'));
+			};
 		};
 
 		$scope.save = function() {
+			if (document.getElementById('tag-name').innerHTML.trim() == "new") {
+				alert("Please change the tag name before save;")
+				return null;
+			};
+
 			$scope.isSaved = true;
 
 			var tagInfo = {
-				tag: document.getElementById('tag-name').innerHTML,
+				tag: $scope.data.isNew ? document.getElementById('tag-name').innerHTML : $scope.data.tag,
 				abstract: document.getElementById('tag-abstract').innerHTML,
 				intro: document.getElementById('tag-intro').innerHTML,
 			};
@@ -69,18 +78,26 @@
 			// replaced with
 			$http({
 					method: 'POST',
-					url: '/saveTag', 
-					data: $.param(tagInfo), 
+					url: '/saveTag',
+					data: $.param(tagInfo),
 					headers: {
 						'Content-Type': 'application/x-www-form-urlencoded'
-					} 
+					},
+					xhrFields: {
+						withCredentials: true
+					}
 				})
 				.success(function(data) {
 					if (!data.success) {
 						$scope.saveText = "not saved";
 					} else {
+						//dynamic change the title
+						var url = window.location.href,
+							nowPath = url.split("/"),
+							newUrl = url.replace(nowPath[nowPath.length - 1], tagInfo.tag);
+						history.pushState('', tagInfo.tag, newUrl);
 						var d = new Date();
-						$scope.saveText = "saved at " + d.getHours() + ":" + (d.getMinutes()<10?'0':"")+ d.getMinutes();
+						$scope.saveText = "saved at " + d.getHours() + ":" + (d.getMinutes() < 10 ? '0' : "") + d.getMinutes();
 					}
 				});
 
@@ -90,14 +107,6 @@
 
 	.filter('unsafe', function($sce) {
 		return $sce.trustAsHtml;
-	})
+	});
 
 })()
-
-// not sure why those error messages on console, although it doesn't affect the way it works.
-jQuery(document).ready(function($) {
-	$('[data-toggle="tooltip"]').tooltip();
-	$('#editing').one('click', function(event) {
-		var editor = new Minislate.simpleEditor(document.getElementById('tag-intro'));
-	});
-});

@@ -36,27 +36,21 @@
 		$scope.tags = [{
 			name: "JavaScript",
 			abstract: "JavaScript (not to be confused with Java) is a dynamic, weakly-typed language used for client-side as well as server-side...",
-			link: "tag.html",
 		}, {
 			name: "Java",
 			abstract: "JavaScript (not to be confused with Java) is a dynamic, weakly-typed language used for client-side as well as server-side...",
-			link: "tag.html",
 		}, {
 			name: "C#",
 			abstract: "JavaScript (not to be confused with Java) is a dynamic, weakly-typed language used for client-side as well as server-side...",
-			link: "tag.html",
 		}, {
 			name: "Php",
 			abstract: "JavaScript (not to be confused with Java) is a dynamic, weakly-typed language used for client-side as well as server-side...",
-			link: "tag.html",
 		}, {
 			name: "Jquery",
 			abstract: "JavaScript (not to be confused with Java) is a dynamic, weakly-typed language used for client-side as well as server-side...",
-			link: "tag.html",
 		}, {
 			name: "python",
 			abstract: "JavaScript (not to be confused with Java) is a dynamic, weakly-typed language used for client-side as well as server-side...",
-			link: "tag.html",
 		}]
 	}])
 

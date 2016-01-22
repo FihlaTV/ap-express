@@ -22,7 +22,7 @@
     </div>
     <ul class="browseTag-list">
       <li class="col-lg-3" ng-repeat="tag in tags | fuzzyBy: 'name': search">
-        <a href="{{tag.link}}"><span class="label label-success">{{tag.name}}</span></a>
+        <a href="/tag/{{tag.name}}"><span class="label label-success">{{tag.name}}</span></a>
         <hr/>
         <p>{{tag.abstract}}</p>
       </li>

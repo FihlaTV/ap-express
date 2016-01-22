@@ -19,9 +19,9 @@
   <div class="container taginfo-container" ng-controller="TaginfoCtrl as info">
     <div class="page-header">
       <h3>Tag info: 
-        <span class="label label-default"><span contenteditable="{{startEdit}}" id="tag-name">{{data.tag}}</span></span> <small ng-if="data.canEdit">
+        <span class="label label-default"><span contenteditable="{{startEdit && data.isNew}}" id="tag-name">{{data.tag}}</span></span> <small ng-if="data.canEdit">
         <a href="#" id="editing" ng-class="{active:isActive}" ng-click="enableEdit()"><i class="fa fa-edit"></i> {{editText}}</a>
-        <a href="#" ng-class="{active:isSaved}" ng-click="save()"><i class="fa fa-save"></i> {{saveText}}</a></small></h3>
+        <a href="#" ng-class="{active:isSaved}" ng-show="startEdit" ng-click="save()"><i class="fa fa-save"></i> {{saveText}}</a></small></h3>
     </div>
     <div>
       <h4>Abstract:</h4>
