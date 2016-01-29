@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/ap-express');
+var db = monk('mongodb://heroku_8wzkd8b9:test716@ds051635.mongolab.com:51635/heroku_8wzkd8b9');
 
 var session = require('express-session');
 // var MongoStore = require('connect-mongo')(session);
