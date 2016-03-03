@@ -1,5 +1,5 @@
 # ap-express
-a node.js application for algorithm platform. (https://github.com/stevetompson0/DeltaWeb)
+a node.js application for algorithm platform (https://github.com/stevetompson0/DeltaWeb) & DNAapp (https://github.com/fangwei716/DNAapp).
 
 ## Dependencies 
 node.js & mongodb 
