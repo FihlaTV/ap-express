@@ -119,9 +119,14 @@ router.post('/login', function(req, res, next) {
 	collection.findOne({
 		"username": user.username
 	}, function(err, theUser) {
-		if (err) {
+		if (!theUser) {
 			// If it failed, return error
-			res.send("There was a problem adding the information to the database.");
+			return res.send({
+				success: false,
+				errors: {
+					errorAuthen: true,
+				}
+			})
 		} else {
 			if (theUser.password == password) {
 				// req.session.userId = theUser._id;
@@ -149,6 +154,47 @@ router.post('/login', function(req, res, next) {
 					errors: {
 						errorAuthen: true
 					}
+				})
+
+			}
+		}
+	});
+
+});
+
+router.post('/ios-login', function(req, res, next) {
+	var db = req.db,
+		collection = db.get('usercollection'),
+		user = req.body,
+		md5 = crypto.createHash('md5'),
+		password = md5.update(user.password).digest('base64');
+
+	collection.findOne({
+		"username": user.username
+	}, function(err, theUser) {
+		if (!theUser) {
+			// If it failed, return error
+			console.log("0")
+			return res.send({
+				error: true,
+				loginState: "2"
+			})
+		} else {
+			if (theUser.password == password) {
+				console.log("1")
+				return res.send({
+					error: false,
+					uid:theUser._id,
+					username: theUser.username,
+					loginState: "1",
+					isFirstTime: "0"
+				})
+
+			} else {
+				console.log("2")
+				return res.send({
+					error: true,
+					loginState: "3"
 				})
 
 			}
